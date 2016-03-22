@@ -121,7 +121,7 @@ namespace QR.Drawing.Graphic
         /// <param name="bar_image2"></param>
         /// <param name="single_image1"></param>
         /// <param name="single_image2"></param>
-        public void InitBarStyle(string folder, string canvas_image, string eye_image, string bar_image1, string bar_image2, string single_image1, string single_image2)
+        public void InitStyle(string folder, string canvas_image, string eye_image, string bar_image1, string bar_image2, string single_image1, string single_image2)
         {
             MergeLayers(new Bitmap(folder + @"/" + canvas_image));
             eyeImages[0] = folder + @"/" + eye_image;

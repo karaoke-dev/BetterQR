@@ -9,7 +9,7 @@ using QR.Drawing.Data;
 using QR.Drawing.Util;
 using System.Drawing;
 
-namespace QR.Drawing
+namespace QR.Drawing.Graphic
 {
     class BlockStyler : Styler
     {
@@ -27,7 +27,7 @@ namespace QR.Drawing
 
         //Private Methods
         //Protected Methods
-        public void InitBlockStyle(string folder,
+        public void InitStyle(string folder,
             string center_img, 
             string single_border_img, 
             string end_border_img, 
