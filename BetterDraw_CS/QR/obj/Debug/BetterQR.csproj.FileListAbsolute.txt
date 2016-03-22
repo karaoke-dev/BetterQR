@@ -19,8 +19,6 @@ C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\QR.Drawing
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\QR.Drawing.pdb
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\Newtonsoft.Json.dll
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\Newtonsoft.Json.xml
-C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\OpenTK.pdb
-C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\OpenTK.xml
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\obj\Debug\BetterQR.csprojResolveAssemblyReference.cache
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\obj\Debug\QR.Drawing.exe
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\obj\Debug\QR.Drawing.pdb
