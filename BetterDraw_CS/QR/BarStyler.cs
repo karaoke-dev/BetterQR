@@ -121,7 +121,7 @@ namespace QR.Drawing.Graphic
         /// <param name="bar_image2"></param>
         /// <param name="single_image1"></param>
         /// <param name="single_image2"></param>
-        public void initDefaultBarStyler(string folder, string canvas_image, string eye_image, string bar_image1, string bar_image2, string single_image1, string single_image2)
+        public void InitBarStyle(string folder, string canvas_image, string eye_image, string bar_image1, string bar_image2, string single_image1, string single_image2)
         {
             MergeLayers(new Bitmap(folder + @"/" + canvas_image));
             eyeImages[0] = folder + @"/" + eye_image;
@@ -133,7 +133,7 @@ namespace QR.Drawing.Graphic
             singleImages[1] = folder + @"/" + single_image2;
         }
 
-        public void Draw()
+        public override void Draw()
         {
             updateCellMarks();
 
@@ -250,6 +250,10 @@ namespace QR.Drawing.Graphic
 
         //construction
         public BarStyler(int canvas_length, float margin, MarginMode margin_mode) : base(canvas_length, margin, margin_mode)
+        {
+            initBarStyler();
+        }
+        public BarStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path) : base(canvas_length, margin, margin_mode, json_path)
         {
             initBarStyler();
         }

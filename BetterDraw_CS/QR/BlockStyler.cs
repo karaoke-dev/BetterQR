@@ -19,9 +19,35 @@ namespace QR.Drawing
         {
             InitDefaultPatterns();
         }
+        public BlockStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
+            :base(canvas_length, margin, margin_mode, json_path)
+        {
+
+        }
 
         //Private Methods
         //Protected Methods
+        public void InitBlockStyle(string folder,
+            string center_img, 
+            string single_border_img, 
+            string end_border_img, 
+            string elbow_border_img,
+            string path_border_img,
+            string t_border_img,
+            string corner_border_img)
+        {
+            string[] imgs = new string[7]
+            {
+                center_img,
+                single_border_img,
+                end_border_img,
+                elbow_border_img,
+                path_border_img,
+                t_border_img,
+                corner_border_img
+            };
+            ImportPatterns(folder, imgs);
+        }
         protected void InitDefaultPatterns()
         {
             string[] paths = new string[7]
@@ -246,7 +272,7 @@ namespace QR.Drawing
             }
         }
 
-        public void Draw()
+        public override void Draw()
         {
             UpdateCellsMarks();
 

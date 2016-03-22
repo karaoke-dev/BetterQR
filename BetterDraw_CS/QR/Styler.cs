@@ -8,25 +8,40 @@ using System.Drawing;
 using QR.Drawing.Util;
 using QR.Drawing.Data;
 using QR.Drawing.Open;
+using Newtonsoft.Json;
 
 namespace QR.Drawing.Graphic
 {
     class Styler
     {
+        private string black_pattern;
+        private string white_pattern;
+        private string background_image;
+        private string canvas_image;
+        private Color black_color;
+        private Color white_color;
+        private Color background_color;
+        private Color canvas_color;
+        private object b;
+
         protected DataMatrix Matrix { get; set; }
         protected Size CanvasSize { get; set; }
         protected SizeF CodeSize { get; set; }
         protected Size Step { get; set; } //the min integer step length.
         protected PointF CodePosition { get; set; }
         protected Bitmap Canvas { get; set; }
+        protected JsonResource JsonInstance { get; set; }
 
         //Constructions *************************************************************************************************
         //build by margin
         public Styler(int canvas_length, float margin, MarginMode margin_mode)
-            :this(canvas_length, margin, margin_mode, Default.MATRIX_COLOR_INFO, Default.MATRIX_COLOR_INFO.GetLength(0))
+            : this(canvas_length, margin, margin_mode, Default.MATRIX_COLOR_INFO, Default.MATRIX_COLOR_INFO.GetLength(0))
+        { }
+        public Styler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
+            : this(canvas_length, canvas_length, margin, margin, margin, margin, margin_mode, json_path)
         { }
         public Styler(int canvas_length, float margin, MarginMode margin_mode, bool[,] info, int order)
-            :this(canvas_length, canvas_length, margin, margin, margin, margin, margin_mode, info, order)
+            : this(canvas_length, canvas_length, margin, margin, margin, margin, margin_mode, info, order)
         { }
         public Styler(int canvas_width, int canvas_height, float margin, MarginMode margin_mode, bool[,] info, int order)
             : this(canvas_width, canvas_height, margin, margin, margin, margin, margin_mode, info, order)
@@ -36,26 +51,12 @@ namespace QR.Drawing.Graphic
         { }
         public Styler(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, bool[,] info, int order)
         {
-            if (margin_mode == MarginMode.PIXEL)
-            {
-                float code_posi_x = left_margin;
-                float code_posi_y = top_margin;
-                float code_width = canvas_width - left_margin - right_margin;
-                float code_height = canvas_height - top_margin - down_margin;
-                InitStyle(canvas_width, canvas_height, code_width, code_height, code_posi_x, code_posi_y, info, order);
-            }
-            else if (margin_mode == MarginMode.CELL)
-            {
-                float cells_number_horizontal = order + left_margin + right_margin;
-                float cells_number_vertical = order + top_margin + down_margin;
-                float step_horizontal = (float)canvas_width / cells_number_horizontal;
-                float step_vertical = (float)canvas_height / cells_number_vertical;
-                float code_posi_x = left_margin * step_horizontal;
-                float code_posi_y = top_margin * step_vertical;
-                float code_width = step_horizontal * order;
-                float code_height = step_vertical * order;
-                InitStyle(canvas_width, canvas_height, code_width, code_height, code_posi_x, code_posi_y, info, order);
-            }
+            InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, info, order);
+        }
+        public Styler(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, string json_path)
+        {
+            InitJson(json_path);
+            InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, JsonInstance.Matrix, JsonInstance.Size);
         }
         //build by size and position
         public Styler(int canvas_length, float code_length)
@@ -68,6 +69,64 @@ namespace QR.Drawing.Graphic
             : this(canvas_width, canvas_height, code_width, code_height, CodePositinoMode.CENTER, info, order)
         { }
         public Styler(
+            int canvas_width, int canvas_height,
+            float code_width, float code_height,
+            CodePositinoMode mode,
+            bool[,] info, int order)
+        {
+            InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, info, order);
+        }
+        public Styler(int canvas_width, int canvas_height,
+            float code_width, float code_height,
+            CodePositinoMode mode,
+            string json_path)
+        {
+            InitJson(json_path);
+            InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, JsonInstance.Matrix, JsonInstance.Size);
+        }
+        public Styler(
+            int canvas_width, int canvas_height,
+            float code_width, float code_height,
+            float posi_x, float posi_y,
+            bool[,] info, int order)
+        {
+            __InitStyle(canvas_width, canvas_height, code_width, code_height, posi_x, posi_y, info, order);
+        }
+        public Styler(
+           int canvas_width, int canvas_height,
+           float code_width, float code_height,
+           float posi_x, float posi_y,
+           string json_path, int order)
+        {
+            InitJson(json_path);
+            __InitStyle(canvas_width, canvas_height, code_width, code_height, posi_x, posi_y, JsonInstance.Matrix, order);
+        }
+
+        //Protected Methods
+        protected void InitStyleWithMarginMode(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, bool[,] info, int order)
+        {
+            if (margin_mode == MarginMode.PIXEL)
+            {
+                float code_posi_x = left_margin;
+                float code_posi_y = top_margin;
+                float code_width = canvas_width - left_margin - right_margin;
+                float code_height = canvas_height - top_margin - down_margin;
+                __InitStyle(canvas_width, canvas_height, code_width, code_height, code_posi_x, code_posi_y, info, order);
+            }
+            else if (margin_mode == MarginMode.CELL)
+            {
+                float cells_number_horizontal = order + left_margin + right_margin;
+                float cells_number_vertical = order + top_margin + down_margin;
+                float step_horizontal = (float)canvas_width / cells_number_horizontal;
+                float step_vertical = (float)canvas_height / cells_number_vertical;
+                float code_posi_x = left_margin * step_horizontal;
+                float code_posi_y = top_margin * step_vertical;
+                float code_width = step_horizontal * order;
+                float code_height = step_vertical * order;
+                __InitStyle(canvas_width, canvas_height, code_width, code_height, code_posi_x, code_posi_y, info, order);
+            }
+        }
+        protected void InitStyleWithPositionMode(
             int canvas_width, int canvas_height,
             float code_width, float code_height,
             CodePositinoMode mode,
@@ -100,19 +159,9 @@ namespace QR.Drawing.Graphic
                 default:
                     break;
             }
-            InitStyle(canvas_width, canvas_height, code_width, code_height, x, y, info, order);
+            __InitStyle(canvas_width, canvas_height, code_width, code_height, x, y, info, order);
         }
-        public Styler(
-            int canvas_width, int canvas_height,
-            float code_width, float code_height,
-            float posi_x, float posi_y,
-            bool[,] info, int order)
-        {
-            InitStyle(canvas_width, canvas_height, code_width, code_height, posi_x, posi_y, info, order);
-        }
-
-        //Protected Methods
-        protected void InitStyle(int i_canvas_width, int i_canvas_height,
+        protected void __InitStyle(int i_canvas_width, int i_canvas_height,
             float i_code_width, float i_code_height,
             float i_posi_x, float i_posi_y,
             bool[,] i_info, int i_order)
@@ -142,6 +191,12 @@ namespace QR.Drawing.Graphic
                         Canvas = new Bitmap(i_canvas_width, i_canvas_height);
                     }
                 }
+
+                //init colors
+                black_color = Default.BLACK;
+                white_color = Default.WHITE;
+                background_color = Default.BG_COLOR;
+                canvas_color = Default.CANVAS_COLOR;
             }
             catch (CodeSizeOutOfCanvasException e)
             {
@@ -151,6 +206,19 @@ namespace QR.Drawing.Graphic
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        protected void __InitStyle(int i_canvas_width, int i_canvas_height,
+            float i_code_width, float i_code_height,
+            float i_posi_x, float i_posi_y,
+            string i_json_path, int i_order)
+        {
+            InitJson(i_json_path);
+            __InitStyle(i_canvas_width, i_canvas_height, i_code_width, i_code_height, i_posi_x, i_posi_y, JsonInstance.Matrix, i_order);
+        }
+        protected void InitJson(string json_path)
+        {
+            string j_string = Utils.ReadFileToString(json_path);
+            JsonInstance = JsonConvert.DeserializeObject<JsonResource>(j_string);
         }
 
         protected void UpdateStep()
@@ -269,7 +337,136 @@ namespace QR.Drawing.Graphic
             }
         }
 
-        //Public Methods
+        //Public Methos
+        public void InitStyle(string folder, string black, string bg)
+        {
+            InitStyle(folder, black, null, bg, null);
+        }
+        public void InitStyle(string folder, string black_pattern_img, string white_pattern_img, string background_img, string canvas_img)
+        {
+            if (black_pattern_img != null)
+            {
+                black_pattern = folder + @"/" + black_pattern_img;
+            }
+            if (white_pattern_img != null)
+            {
+                white_pattern = folder + @"/" + white_pattern_img;
+            }
+            if (background_img != null)
+            {
+                background_image = folder + @"/" + background_img;
+            }
+            if (canvas_img != null)
+            {
+                canvas_image = folder + @"/" + canvas_img;
+            }
+        }
+
+        public void DrawOrigin()
+        {
+            Bitmap layer_black = NewLayer();
+            Bitmap layer_black_tmp = NewIntegerPixelLayer();
+            Bitmap layer_canvas = NewLayer();
+            Graphics paint = null;
+
+            //draw black
+            paint = Graphics.FromImage(layer_black_tmp);
+            Brush black_brush = new SolidBrush(Color.Black);
+            var cells = from c in Matrix.CellMatrix.Cast<DataCell>() where c.Color == CellColor.BLACK select c;
+            foreach (var c in cells)
+            {
+                paint.FillRectangle(black_brush, GetCellRectangle(c.Position.Row, c.Position.Column));
+            }
+            paint = Graphics.FromImage(layer_black);
+            paint.DrawImage(layer_black_tmp,
+                new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),
+                new Rectangle(0, 0, layer_black_tmp.Width, layer_black_tmp.Height),
+                GraphicsUnit.Pixel);
+
+            //draw canvas
+            paint = Graphics.FromImage(layer_canvas);
+            Brush white_brush = new SolidBrush(Color.White);
+            paint.FillRectangle(white_brush, new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+
+            //Merge layers
+            MergeLayers(layer_canvas, layer_black);
+        }
+        public virtual void Draw()
+        {
+            Bitmap layer_black = NewLayer();
+            Bitmap layer_black_tmp = NewIntegerPixelLayer();
+            Bitmap layer_white = NewLayer();
+            Bitmap layer_white_tmp = NewIntegerPixelLayer();
+            Bitmap layer_background = NewLayer();
+            Bitmap layer_canvas = NewLayer();
+            Graphics paint = null;
+
+            //draw black
+            paint = Graphics.FromImage(layer_black_tmp);
+            if (black_pattern != null)
+            {
+                Bitmap pattern_black = new Bitmap(black_pattern);
+                var black = from b in Matrix.CellMatrix.Cast<DataCell>() where b.Color == CellColor.BLACK select b;
+                foreach (var b in black)
+                {
+                    paint.DrawImage(pattern_black,
+                            GetCellRectangle(b.Position.Row, b.Position.Column),
+                            new Rectangle(0, 0, pattern_black.Width, pattern_black.Height),
+                            GraphicsUnit.Pixel);
+                }
+            }
+            paint = Graphics.FromImage(layer_black);
+            paint.DrawImage(layer_black_tmp,
+                new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),
+                new Rectangle(0, 0, layer_black_tmp.Width, layer_black_tmp.Height), GraphicsUnit.Pixel);
+
+            //draw white
+            paint = Graphics.FromImage(layer_white_tmp);
+            if (white_pattern != null)
+            {
+                Bitmap pattern_white = new Bitmap(white_pattern);
+                var white = from w in Matrix.CellMatrix.Cast<DataCell>() where w.Color == CellColor.WHITE select w;
+                foreach (var w in white)
+                {
+                    paint.DrawImage(pattern_white,
+                            GetCellRectangle(w.Position.Row, w.Position.Column),
+                            new Rectangle(0, 0, pattern_white.Width, pattern_white.Height),
+                            GraphicsUnit.Pixel);
+                }
+            }
+            paint = Graphics.FromImage(layer_white);
+            paint.DrawImage(layer_white_tmp,
+                new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),
+                new Rectangle(0, 0, layer_black_tmp.Width, layer_black_tmp.Height), GraphicsUnit.Pixel);
+
+            //draw background
+            paint = Graphics.FromImage(layer_background);
+            if (background_image != null)
+            {
+                Bitmap bg_img = new Bitmap(background_image);
+                paint.DrawImage(bg_img,
+                    new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),
+                        new Rectangle(0, 0, bg_img.Width, bg_img.Height), GraphicsUnit.Pixel);
+            }
+
+            //draw canvas
+            paint = Graphics.FromImage(layer_canvas);
+            if (canvas_image != null)
+            {
+                Bitmap c_img = new Bitmap(canvas_image);
+                paint.DrawImage(c_img, new Rectangle(0, 0, CanvasSize.Width, CanvasSize.Height),
+                        new Rectangle(0, 0, c_img.Width, c_img.Height),
+                        GraphicsUnit.Pixel);
+            }
+            else
+            {
+                paint.FillRectangle(new SolidBrush(canvas_color), new Rectangle(0, 0, CanvasSize.Width, CanvasSize.Height));
+            }
+
+            //merge layers
+            MergeLayers(layer_canvas, layer_background, layer_white, layer_black);
+        }
+
         public void Draw(Object brush_black, Object brush_background, Object brush_canvas)
         {
             try

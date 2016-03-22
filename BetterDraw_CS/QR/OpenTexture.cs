@@ -11,7 +11,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using QR.Drawing.Util;
 
-namespace QR.Drawing
+namespace QR.Drawing.Open
 {
     class OpenTexture
     {

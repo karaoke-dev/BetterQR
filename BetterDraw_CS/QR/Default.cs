@@ -13,6 +13,7 @@ namespace QR.Drawing.Util
         public static readonly Color WHITE = Color.White;
         public static readonly Color BLACK = Color.Black;
         public static readonly Color BG_COLOR = Color.White;
+        public static readonly Color CANVAS_COLOR = Color.White;
         public static readonly Color WINDOW_BG = Color.LightBlue;
         public static readonly string WINDOW_TITLE = "QR Code Display";
 

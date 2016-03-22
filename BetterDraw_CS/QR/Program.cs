@@ -14,31 +14,28 @@ namespace QR.Drawing
     {
         static void Main(string[] args)
         {
+            string j_path = @"Resources/json_file.json";
             //Data.DataMatrix dm = new Data.DataMatrix(21);
             //bool[,] info = dm.MatrixColorInfo;
             //Traverse.PrintMatirx<bool>(info);
 
-            //Styler st = new Styler(1000, 900);
-            //st.Draw(
-            //    new TextureBrush(new Bitmap(@"Patterns/t_p.png")),
-            //    new TextureBrush(new Bitmap(@"Patterns/t_bg.jpg")),
-            //    Default.BG_COLOR);
+            //Styler st = new Styler(1000, 50, MarginMode.PIXEL, j_path);
+            //st.InitStyle(@"Patterns", "t_p.png", "t_bg.jpg");
+            //st.Draw();
             //st.Display(800, 800);
             //st.Save(@"Patterns/2.png");
 
-            //BlockStyler bs = new BlockStyler(1000, 50, MarginMode.PIXEL);
+            //BlockStyler bs = new BlockStyler(1000, 50, MarginMode.PIXEL, j_path);
+            //bs.InitBlockStyle("StrokePatterns", "center.png", "single_border.png", "end_border.png", "elbow_border.png", "path_border.png", "t_border.png", "corner_border.png");
             //bs.Draw();
             //bs.Display(800, 800);
             //bs.Save(@"Patterns/b.png");
 
-
-            BarStyler bs = new BarStyler(1000, 50, MarginMode.PIXEL);
-            bs.initDefaultBarStyler("BarPatterns", "canvas.png", "eye.png", "b3.png", "b4.png", "s1.png", "s2.png");
+            BarStyler bs = new BarStyler(1000, 50, MarginMode.PIXEL, j_path);
+            bs.InitBarStyle("BarPatterns", "canvas.png", "eye.png", "b3.png", "b4.png", "s1.png", "s2.png");
             bs.Draw();
             bs.Display(800, 800);
             bs.Save(@"Patterns/bars.png");
-
-
         }
     }
 }
