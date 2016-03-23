@@ -31,7 +31,9 @@ xx.save("path")用来将图片保存在path路径上，path需要以.png .jpg .b
 
 ##namespace QR.Drawing.Graphic
 ###Styler.cs
-绘图样式基类，包含对DataMatrix的调用和图像生成的基本功能函数，供子集调用。可用来生成基本的二维码图形。所有其他带有Styler的类全都直接或间接继承自此类。
+绘图样式基类，包含对DataMatrix的调用和图像生成的基本功能函数，供子集调用。可用来生成黑白二维码图形。所有其他带有Styler的类全都直接或间接继承自此类。
+###BasicStyler.cs
+基本的拼图二维码，可对黑色区域用统一的图案拼接。
 ###BlockStyler.cs
 生成描边样式的二维码绘图子类，继承自Styler.cs。
 ###BarStyler.cs
@@ -54,5 +56,14 @@ xx.save("path")用来将图片保存在path路径上，path需要以.png .jpg .b
 在屏幕中显示生成的二维码图片的类，需要OpenTK环境支持。
 ###OpenTexture.cs
 供OpenDisplay使用的二维贴图类，需要OpenTK环境支持。
+
+#绘图程序操作
+1. 创建Styler派生类对象（或Styler本身）。
+2. 调用xx.InitStyle(parms)函数初始化对应的绘图类对象。
+3. 调用xx.Draw()函数绘制图像。
+4. 如果需要显示，调用xx.Display(width，height)函数在屏幕中显示绘制好的图像。
+5. 如果需要保存，调用xx.Save(path)函数保存图像。
+*第四步和第五步顺序随意，不过因为是单线程，如果先调用第四步的话必须关闭显示窗口才能保存图像，直接结束程序不会保存图像。
+
 
 
