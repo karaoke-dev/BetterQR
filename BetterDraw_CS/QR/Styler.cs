@@ -16,8 +16,8 @@ namespace QR.Drawing.Graphic
     {
         protected DataMatrix Matrix { get; set; }
         protected Size CanvasSize { get; set; }
-        protected SizeF CodeSize { get; set; }
-        protected Size Step { get; set; } //the min integer step length.
+        protected SizeF CodeSize { get; set; }  //Code full Size, Not the Step * MatirxOrder.
+        protected Size IntStep { get; set; }  //the min integer step length.
         protected PointF CodePosition { get; set; }
         protected Bitmap Canvas { get; set; }
         protected JsonResource JsonInstance { get; set; }
@@ -41,12 +41,12 @@ namespace QR.Drawing.Graphic
         { }
         public Styler(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, bool[,] info, int order)
         {
-            InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, info, order);
+            __InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, info, order);
         }
         public Styler(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, string json_path)
         {
             InitJson(json_path);
-            InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, JsonInstance.Matrix, JsonInstance.Size);
+            __InitStyleWithMarginMode(canvas_width, canvas_height, left_margin, top_margin, right_margin, down_margin, margin_mode, JsonInstance.Matrix, JsonInstance.Size);
         }
         //build by size and position
         public Styler(int canvas_length, float code_length)
@@ -64,7 +64,7 @@ namespace QR.Drawing.Graphic
             CodePositinoMode mode,
             bool[,] info, int order)
         {
-            InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, info, order);
+            __InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, info, order);
         }
         public Styler(int canvas_width, int canvas_height,
             float code_width, float code_height,
@@ -72,7 +72,7 @@ namespace QR.Drawing.Graphic
             string json_path)
         {
             InitJson(json_path);
-            InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, JsonInstance.Matrix, JsonInstance.Size);
+            __InitStyleWithPositionMode(canvas_width, canvas_height, code_width, code_height, mode, JsonInstance.Matrix, JsonInstance.Size);
         }
         public Styler(
             int canvas_width, int canvas_height,
@@ -91,9 +91,13 @@ namespace QR.Drawing.Graphic
             InitJson(json_path);
             __InitStyle(canvas_width, canvas_height, code_width, code_height, posi_x, posi_y, JsonInstance.Matrix, order);
         }
+        /// <summary>
+        /// Do nothing, only for subclasses custom constructions.
+        /// </summary>
+        protected Styler() { return;  }
 
         //Protected Methods
-        protected void InitStyleWithMarginMode(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, bool[,] info, int order)
+        protected void __InitStyleWithMarginMode(int canvas_width, int canvas_height, float left_margin, float top_margin, float right_margin, float down_margin, MarginMode margin_mode, bool[,] info, int order)
         {
             if (margin_mode == MarginMode.PIXEL)
             {
@@ -116,7 +120,7 @@ namespace QR.Drawing.Graphic
                 __InitStyle(canvas_width, canvas_height, code_width, code_height, code_posi_x, code_posi_y, info, order);
             }
         }
-        protected void InitStyleWithPositionMode(
+        protected void __InitStyleWithPositionMode(
             int canvas_width, int canvas_height,
             float code_width, float code_height,
             CodePositinoMode mode,
@@ -223,7 +227,7 @@ namespace QR.Drawing.Graphic
                 {
                     int width = (int)Math.Ceiling(CodeSize.Width / Matrix.MatrixOrder);
                     int height = (int)Math.Ceiling(CodeSize.Height / Matrix.MatrixOrder);
-                    Step = new Size(width, height);
+                    IntStep = new Size(width, height);
                 }
             }
             catch (CodeSizeEmptyException e) { Console.WriteLine(e.Message); }
@@ -239,9 +243,9 @@ namespace QR.Drawing.Graphic
         /// <returns></returns>
         protected Rectangle GetCellRectangle(int row, int col)
         {
-            int x = col * Step.Width;
-            int y = row * Step.Height;
-            return new Rectangle(x, y, Step.Width, Step.Height);
+            int x = col * IntStep.Width;
+            int y = row * IntStep.Height;
+            return new Rectangle(x, y, IntStep.Width, IntStep.Height);
         }
         /// <summary>
         /// Get a Rectangle with EyePosition.
@@ -253,23 +257,23 @@ namespace QR.Drawing.Graphic
         {
             int x = -1;
             int y = -1;
-            int width = Step.Width * 7;
-            int height = Step.Height * 7;
+            int width = IntStep.Width * 7;
+            int height = IntStep.Height * 7;
             switch (posi)
             {
                 case EyePosition.LEFT_UP:
                     x = 0;
                     y = 0;
-                    width = Step.Width * 7;
-                    height = Step.Height * 7;
+                    width = IntStep.Width * 7;
+                    height = IntStep.Height * 7;
                     break;
                 case EyePosition.RIGHT_UP:
-                    x = Step.Width * (Matrix.MatrixOrder - 7);
+                    x = IntStep.Width * (Matrix.MatrixOrder - 7);
                     y = 0;
                     break;
                 case EyePosition.LEFT_DOWN:
                     x = 0;
-                    y = Step.Height * (Matrix.MatrixOrder - 7);
+                    y = IntStep.Height * (Matrix.MatrixOrder - 7);
                     break;
                 default:
                     break;
@@ -293,14 +297,22 @@ namespace QR.Drawing.Graphic
             }
         }
 
+        /// <summary>
+        /// Create a new layer whose width and height is the Canvas' width and height.
+        /// </summary>
+        /// <returns></returns>
         protected Bitmap NewLayer()
         {
             return new Bitmap(Canvas.Width, Canvas.Height);
         }
+        /// <summary>
+        /// Create a new layer whose width and height is CodeSize.Width and CodeSize.Height 
+        /// </summary>
+        /// <returns></returns>
         protected Bitmap NewIntegerPixelLayer()
         {
-            int width = Step.Width * Matrix.MatrixOrder;
-            int height = Step.Height * Matrix.MatrixOrder;
+            int width = IntStep.Width * Matrix.MatrixOrder;
+            int height = IntStep.Height * Matrix.MatrixOrder;
             return new Bitmap(width, height);
         }
 

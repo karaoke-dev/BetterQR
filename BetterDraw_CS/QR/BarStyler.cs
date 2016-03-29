@@ -181,7 +181,7 @@ namespace QR.Drawing.Graphic
                 foreach(var cell in bar_h)
                 {
                     Rectangle cell_rect = GetCellRectangle(cell.Position.Row, cell.Position.Column);
-                    Rectangle bar_rect = new Rectangle(cell_rect.X, cell_rect.Y, Step.Width * length, Step.Height);
+                    Rectangle bar_rect = new Rectangle(cell_rect.X, cell_rect.Y, IntStep.Width * length, IntStep.Height);
                     paint.DrawImage(bar_image, bar_rect, new Rectangle(0, 0, bar_image.Width, bar_image.Height), GraphicsUnit.Pixel);
                 }
 
@@ -193,7 +193,7 @@ namespace QR.Drawing.Graphic
                 foreach (var cell in bar_v)
                 {
                     Rectangle cell_rect = GetCellRectangle(cell.Position.Row, cell.Position.Column);
-                    Rectangle bar_rect = new Rectangle(cell_rect.X, cell_rect.Y, Step.Width, Step.Height * length);
+                    Rectangle bar_rect = new Rectangle(cell_rect.X, cell_rect.Y, IntStep.Width, IntStep.Height * length);
                     paint.DrawImage(bar_image, bar_rect, new Rectangle(0, 0, bar_image.Width, bar_image.Height), GraphicsUnit.Pixel);
                 }
             }
