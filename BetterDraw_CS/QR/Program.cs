@@ -41,7 +41,7 @@ namespace QR.Drawing
             ts.InitStyle("TetrisPatterns", "point.png", "top_sample.png", "bottom_sample.png", Color.FromArgb(255,156, 161, 159));
             ts.Draw();
             ts.Display();
-            //ts.Save(@"patterns/Tetris.png");
+            ts.Save(@"patterns/Tetris.png");
         }
     }
 }
