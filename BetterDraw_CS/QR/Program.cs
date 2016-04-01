@@ -37,11 +37,17 @@ namespace QR.Drawing
             //bs.Display(800, 800);
             //bs.Save(@"Patterns/bars.png");
 
-            TetrisStyler ts = new TetrisStyler(800, 1.5f, MarginMode.CELL, j_path);
-            ts.InitStyle("TetrisPatterns", "point.png", "top_sample.png", "bottom_sample.png", Color.FromArgb(255,156, 161, 159));
-            ts.Draw();
-            ts.Display();
-            ts.Save(@"patterns/Tetris.png");
+            //TetrisStyler ts = new TetrisStyler(800, 1.5f, MarginMode.CELL, j_path);
+            //ts.InitStyle("TetrisPatterns", "point.png", "top_sample.png", "bottom_sample.png", Color.FromArgb(255,156, 161, 159));
+            //ts.Draw();
+            //ts.Display();
+            //ts.Save(@"patterns/Tetris.png");
+
+            BlueNightStyler bs = new BlueNightStyler(800, 50, MarginMode.PIXEL, j_path);
+            bs.InitStyle(@"Patterns", "blue_point.png");
+            bs.Draw();
+            bs.Display();
+            bs.Save("patterns/BlueNight.png");
         }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="BarStyler.cs" />
     <Compile Include="BasicStyler.cs" />
     <Compile Include="BlockStyler.cs" />
+    <Compile Include="BlueNightStyler.cs" />
     <Compile Include="CellExtraData.cs" />
     <Compile Include="DataCell.cs" />
     <Compile Include="DataMatrix.cs" />
@@ -170,6 +171,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TetrisPatterns\top_sample.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Patterns\blue_point.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

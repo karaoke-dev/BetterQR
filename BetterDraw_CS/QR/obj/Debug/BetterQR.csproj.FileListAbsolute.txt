@@ -26,3 +26,4 @@ C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\TetrisPatt
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\Patterns\point.png
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\TetrisPatterns\bottom_sample.png
 C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\TetrisPatterns\top_sample.png
+C:\Users\hyn\Documents\Repository\BetterQR\BetterDraw_CS\QR\bin\Debug\Patterns\blue_point.png
