@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
+using System.Drawing;
 
 namespace QR.Drawing.Util
 {
@@ -35,13 +36,40 @@ namespace QR.Drawing.Util
                     throw (new FileNonExistException(
                         "File \"" + path + "\" is not existing, please check out if the path is correct."));
                 }
-                
-            }catch(FileNonExistException e)
+
+            }
+            catch (FileNonExistException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
             }
-            
+
+        }
+
+        static public RectangleF FitImage(Bitmap img, RectangleF target_rect)
+        {
+            float img_prop = (float)img.Width / img.Height;
+            float rect_prop = target_rect.Width / target_rect.Height;
+            if (img_prop > rect_prop)
+            {
+                //fit width
+                float scale = target_rect.Width / img.Width;
+                float new_width = target_rect.Width;
+                float new_height = img.Height * scale;
+                float new_x = target_rect.X;
+                float new_y = target_rect.Y + (target_rect.Height - new_height) / 2.0f;
+                return new RectangleF(new_x, new_y, new_width, new_height);
+            }
+            else
+            {
+                //fit height
+                float scale = target_rect.Height / img.Height;
+                float new_width = img.Width * scale;
+                float new_height = target_rect.Height;
+                float new_x = target_rect.X + (target_rect.Width - new_width) / 2.0f;
+                float new_y = target_rect.Y;
+                return new RectangleF(new_x, new_y, new_width, new_height);
+            }
         }
     }
 

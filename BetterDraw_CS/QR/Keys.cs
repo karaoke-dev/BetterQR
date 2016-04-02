@@ -12,5 +12,6 @@ namespace QR.Drawing.Util
         static public readonly string Direction = "Direction";
         static public readonly string Corner = "Corner";
         static public readonly string Count = "Count";
+        static public readonly string Color = "Color";
     }
 }

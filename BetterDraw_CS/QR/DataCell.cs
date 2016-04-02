@@ -39,17 +39,21 @@ namespace QR.Drawing.Data
         //Public Methods ***********************************************************************************************
         //Structures
         //Eye
+        /// <summary>
+        /// If the Cell's position is in the 7*7 Eye position.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEye()
         {
-            if(Position.Column < 7 && Position.Row < 7)
+            if (Position.Column < 7 && Position.Row < 7)
             {
                 return true;
             }
-            else if(Position.Column >= RootMatrix.MatrixOrder - 7 && Position.Row < 7)
+            else if (Position.Column >= RootMatrix.MatrixOrder - 7 && Position.Row < 7)
             {
                 return true;
             }
-            else if(Position.Column < 7 && Position.Row >= RootMatrix.MatrixOrder - 7)
+            else if (Position.Column < 7 && Position.Row >= RootMatrix.MatrixOrder - 7)
             {
                 return true;
             }
@@ -167,6 +171,122 @@ namespace QR.Drawing.Data
             if (SameUpColor()) { ++count; }
             if (SameDownColor()) { ++count; }
             return count;
+        }
+
+        public delegate bool DeleFeatureFlag(DataCell cell);
+        /// <summary>
+        /// Features the 3*3 grid whose left top cell is current cell. Mark based flag.
+        /// </summary>
+        /// <returns></returns>
+        public int Feature33(DeleFeatureFlag flag)
+        {
+            int feature = 0;
+            if (HasRightCell() && RightCell().HasRightCell() && HasDownCell() && DownCell().HasDownCell())
+            {
+                if (flag(this)) { feature += 1; }
+                if (flag(RightCell())) { feature += 2; }
+                if (flag(RightCell().RightCell())) { feature += 4; }
+
+                if (flag(DownCell())) { feature += 8; }
+                if (flag(DownCell().RightCell())) { feature += 16; }
+                if (flag(DownCell().RightCell().RightCell())) { feature += 32; }
+
+                if (flag(DownCell().DownCell())) { feature += 64; }
+                if (flag(DownCell().DownCell().RightCell())) { feature += 128; }
+                if (flag(DownCell().DownCell().RightCell().RightCell())) { feature += 256; }
+            }
+            else
+            {
+                feature = -1;
+            }
+            return feature;
+        }
+        /// <summary>
+        /// Features the 3 rows 2 cols grid. The left top cell is current cell. Mark based flag.
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <returns>1,2  4,8  16,32</returns>
+        public int Feature32(DeleFeatureFlag flag)
+        {
+            int feature = 0;
+            if (HasRightCell() && HasDownCell() && DownCell().HasDownCell())
+            {
+                if (flag(this)) { feature += 1; }
+                if (flag(RightCell())) { feature += 2; }
+
+                if (flag(DownCell())) { feature += 4; }
+                if (flag(DownCell().RightCell())) { feature += 8; }
+
+                if (flag(DownCell().DownCell())) { feature += 16; }
+                if (flag(DownCell().DownCell().RightCell())) { feature += 16; }
+            }
+            else
+            {
+                feature = -1;
+            }
+
+            return feature;
+        }
+        /// <summary>
+        /// Features the 'row' rows 'col' cols grid. The left top cell is current cell. Mark based flag.
+        /// </summary>
+        /// </summary>
+        /// <returns></returns>
+        public int Feature(int row, int col, DeleFeatureFlag flag)
+        {
+            int feature = 0;
+
+            DataCell cell = this;
+            //test if has enough rows
+            for (int i = 0; i < row - 1; i++)
+            {
+                if (cell.HasDownCell())
+                {
+                    cell = cell.DownCell();
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            cell = this;
+            //test if has enough columns
+            for (int i = 0; i < col - 1; i++)
+            {
+                if (cell.HasRightCell())
+                {
+                    cell = cell.RightCell();
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            cell = this;
+            DataCell cell_j = cell;
+            //feature
+            int bit_flag = 1;
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    if (flag(cell_j))
+                    {
+                        feature += bit_flag;
+                    }
+                    bit_flag <<= 1;
+                    if (j < col - 1)
+                    {
+                        cell_j = cell_j.RightCell();
+                    }
+                }
+                if (i < row - 1)
+                {
+                    cell = cell.DownCell();
+                    cell_j = cell;
+                }
+            }
+            return feature;
         }
         /// <summary>
         /// Returns a int number representes which cells around this cell has the same color with this cell's color.

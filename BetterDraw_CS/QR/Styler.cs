@@ -332,6 +332,43 @@ namespace QR.Drawing.Graphic
                     GraphicsUnit.Pixel);
             }
         }
+        /// <summary>
+        /// Fill an image based on the given cell, the output is a RectangleF.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="cell"></param>
+        /// <param name="rows">The rows which the drawn image will cover.</param>
+        /// <param name="cols">The columns which the drawn image will cover.</param>
+        /// <param name="shift_step_x">The shift x direction calculated with IntStep.Width</param>
+        /// <param name="shift_step_y">The shift y direction calculated with IntStep.Heigth</param>
+        protected RectangleF DrawImage(Graphics paint, Bitmap image, DataCell cell, float rows, float cols, float shift_step_x, float shift_step_y)
+        {
+            Rectangle cell_rect = GetCellRectangle(cell.Position.Row, cell.Position.Column);
+            float rect_x = cell_rect.X + shift_step_x * IntStep.Width;
+            float rect_y = cell_rect.Y + shift_step_y * IntStep.Height;
+            float rect_width = cols * IntStep.Width;
+            float rect_height = rows * IntStep.Height;
+            RectangleF target_rect = new RectangleF(rect_x, rect_y, rect_width, rect_height);
+            paint.DrawImage(image, target_rect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+            return target_rect;
+        }
+        protected Rectangle DrawImage(Graphics paint, Bitmap image, DataCell cell, int rows, int cols)
+        {
+            RectangleF rect_base = DrawImage(paint, image, cell, rows, cols, 0, 0);
+            return new Rectangle((int)rect_base.X, (int)rect_base.Y, (int)rect_base.Width, (int)rect_base.Height);
+        }
+        protected RectangleF DrawFitImage(Graphics paint, Bitmap image, DataCell cell, float rows, float cols, float shift_step_x, float shift_step_y)
+        {
+            Rectangle cell_rect = GetCellRectangle(cell.Position.Row, cell.Position.Column);
+            float rect_x = cell_rect.X + shift_step_x * IntStep.Width;
+            float rect_y = cell_rect.Y + shift_step_y * IntStep.Height;
+            float rect_width = cols * IntStep.Width;
+            float rect_height = rows * IntStep.Height;
+            RectangleF target_rect = new RectangleF(rect_x, rect_y, rect_width, rect_height);
+            RectangleF final_rect = Utils.FitImage(image, target_rect);
+            paint.DrawImage(image, final_rect, new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+            return final_rect;
+        }
 
         //Public Methos
         public void DrawOrigin()

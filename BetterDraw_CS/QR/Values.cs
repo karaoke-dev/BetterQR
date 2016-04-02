@@ -29,5 +29,34 @@ namespace QR.Drawing.Util
         static public readonly string Vertical = "Vertical";
 
         static public readonly string Marked = "Marked";
+
+        static public readonly string YellowCircle = "YellowCircle";
+        static public readonly string RedDashedCircle = "RedDashedCircle";
+        static public readonly string BeanToRight = "BeanToRight";
+        static public readonly string BeanToRightUp = "BeanToRightUp";
+        static public readonly string BeanToUp = "BeanToUp";
+        static public readonly string BeanToLeft = "BeanToLeft";
+        static public readonly string BeanToLeftUp = "BeanToLeftup";
+        static public readonly string BeanToRightDown = "BeanToRightDown";
+        static public readonly string BeanToDown = "BeanToDown";
+        static public readonly string UmbrellaBegin = "UmbrellaBegin";
+        static public readonly string Umbrella = "Umbrella";
+        static public readonly string BulbBegin = "BulbBegin";
+        static public readonly string Bulb = "Bulb";
+        static public readonly string WaveBegin = "WaveBegin";
+        static public readonly string Wave = "Wave";
+        static public readonly string HeartBegin = "HeartBegin";
+        static public readonly string Heart = "Heart";
+        static public readonly string PointerBegin = "PointerBegin";
+        static public readonly string Pointer = "Pointer";
+        static public readonly string BikeBegin = "BikeBegin";
+        static public readonly string Bike = "Bike";
+
+        static public readonly string Cas2Begin = "Cas2Begin";
+        static public readonly string Cas2 = "Cas2";
+        static public readonly string Cas3Begin = "Cas3Begin";
+        static public readonly string Cas3 = "Cas3";
+        static public readonly string Cas4Begin = "Cas4Begin";
+        static public readonly string Cas4 = "Cas4";
     }
 }
