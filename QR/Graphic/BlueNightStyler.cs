@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Drawing;
-using System.Drawing.Imaging;
-using QR.Drawing.Graphic;
 using QR.Drawing.Data;
 
-namespace QR.Drawing
+namespace QR.Drawing.Graphic
 {
     public class BlueNightStyler : Styler
     {
