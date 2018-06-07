@@ -8,7 +8,7 @@ using System.Drawing;
 using QR.Drawing.Util;
 using QR.Drawing.Graphic;
 
-namespace QR.Drawing
+namespace Demo
 {
     class Program
     {

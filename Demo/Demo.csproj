@@ -6,9 +6,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Description>QRCore generator with openTK</Description>
-    <AssemblyName>BetterQR</AssemblyName>
-    <Title>BetterQR</Title>
-    <Product>BetterQR</Product>
+    <AssemblyName>Demo</AssemblyName>
+    <Title>Demo</Title>
+    <Product>Demo</Product>
     <Version>0.0.0.0</Version>
     <FileVersion>0.0.0.0</FileVersion>
   </PropertyGroup>
@@ -16,8 +16,8 @@
     <DefineConstants Condition="'$(TargetFramework)' == 'net461'">$(DefineConstants);NET_FRAMEWORK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>QR.Drawing.Program</StartupObject>
-    <RootNamespace>QR.Drawing</RootNamespace>
+    <StartupObject>Demo.Program</StartupObject>
+    <RootNamespace>Demo</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Label="Package References">
