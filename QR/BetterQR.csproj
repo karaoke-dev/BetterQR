@@ -18,6 +18,7 @@
     <StartupObject></StartupObject>
     <RootNamespace>QR.Drawing</RootNamespace>
     <ApplicationIcon />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />
