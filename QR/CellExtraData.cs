@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace QR.Drawing.Data
 {
-    class CellExtraData
+    public class CellExtraData
     {
         public Roles Role { get; set; }
     }// CellExtraData
 
-    enum Roles
+    public enum Roles
     {
         HEAD,
         PATH,

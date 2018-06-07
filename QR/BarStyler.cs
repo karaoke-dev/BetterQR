@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 
 namespace QR.Drawing.Graphic
 {
-    class BarStyler : Styler
+    public class BarStyler : Styler
     {
         private string[] singleImages;
         private string[] eyeImages;

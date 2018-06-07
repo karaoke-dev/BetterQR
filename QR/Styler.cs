@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace QR.Drawing.Graphic
 {
-    class Styler
+    public class Styler
     {
         protected DataMatrix Matrix { get; set; }
         protected Size CanvasSize { get; set; }
@@ -579,7 +579,7 @@ namespace QR.Drawing.Graphic
     /// <summary>
     /// Set in the size and position build model. Auto set the code's position
     /// </summary>
-    enum CodePositinoMode : byte
+    public enum CodePositinoMode : byte
     {
         CENTER,
         CENTER_LEFT,
@@ -592,7 +592,7 @@ namespace QR.Drawing.Graphic
     /// <para> The margin parameters are measured by pixel when MarginMode is PIXEL, by cell number when MarginMode is CELL. </para>
     /// <para> This parameter is [Requisite] in margin build model. Or Styler will be build in size and position model or build error. </para>
     /// </summary>
-    enum MarginMode : byte
+    public enum MarginMode : byte
     {
         CELL,
         PIXEL
@@ -601,7 +601,7 @@ namespace QR.Drawing.Graphic
     /// <summary>
     /// Represent the positon of the code eyes
     /// </summary>
-    enum EyePosition : byte
+    public enum EyePosition : byte
     {
         LEFT_UP,
         RIGHT_UP,

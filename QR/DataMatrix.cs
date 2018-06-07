@@ -8,7 +8,7 @@ using QR.Drawing.Util;
 
 namespace QR.Drawing.Data
 {
-    class DataMatrix
+    public class DataMatrix
     {
         //Private Values
         private int matrix_order = 0;

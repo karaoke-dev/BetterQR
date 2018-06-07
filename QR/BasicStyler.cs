@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 
 namespace QR.Drawing.Graphic
 {
-    class BasicStyler : Styler
+    public class BasicStyler : Styler
     {
         private string black_pattern;
         private string white_pattern;

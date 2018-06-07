@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace QR.Drawing.Util
 {
-    class Utils
+    public class Utils
     {
         static public string ReadFileToString(string path)
         {

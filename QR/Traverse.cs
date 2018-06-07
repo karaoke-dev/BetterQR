@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QR.Drawing.Util
 {
-    class Traverse
+    public class Traverse
     {
         //Delegates
         public delegate void DeleFuncMatrix<T, S>(ref T[,] target_matrix, S[,] source_matrix, int i, int j);

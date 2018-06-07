@@ -13,7 +13,7 @@ using QR.Drawing.Util;
 
 namespace QR.Drawing.Open
 {
-    class OpenTexture
+    public class OpenTexture
     {
         public Bitmap SourceImage { get; set; }
         public int ID { get; set; }

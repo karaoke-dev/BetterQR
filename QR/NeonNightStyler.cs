@@ -11,7 +11,7 @@ using QR.Drawing.Util;
 
 namespace QR.Drawing.Graphic
 {
-    class NeonNightStyler : Styler
+    public class NeonNightStyler : Styler
     {
         protected string YelloCircle { get; set; }
         protected string RedCircle { get; set; }

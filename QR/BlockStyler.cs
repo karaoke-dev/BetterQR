@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace QR.Drawing.Graphic
 {
-    class BlockStyler : Styler
+    public class BlockStyler : Styler
     {
         protected Dictionary<PatternElems, string> PatternDirs;
         //Construction
@@ -508,7 +508,7 @@ namespace QR.Drawing.Graphic
         }
     }
 
-    enum PatternElems
+    public enum PatternElems
     {
         BASE_PATTERN,
         SINGLE_BORDER,

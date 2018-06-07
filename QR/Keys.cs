@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QR.Drawing.Util
 {
-    class Keys
+    public class Keys
     {
         static public readonly string Role = "Role";
         static public readonly string Direction = "Direction";

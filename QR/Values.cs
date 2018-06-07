@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QR.Drawing.Util
 {
-    class Values
+    public class Values
     {
         static public readonly string Null = "Null";
 

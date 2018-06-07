@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace QR.Drawing.Util
 {
-    class Default
+    public class Default
     {
         public static readonly Color WHITE = Color.White;
         public static readonly Color BLACK = Color.Black;

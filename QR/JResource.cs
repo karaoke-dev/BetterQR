@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QR.Drawing.Data
 {
-    class JsonResource
+    public class JsonResource
     {
         //propeties
         public string Message { get; set; }

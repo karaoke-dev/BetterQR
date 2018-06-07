@@ -11,7 +11,7 @@ using QR.Drawing.Data;
 
 namespace QR.Drawing.Graphic
 {
-    class CascadeStyler : NeonNightStyler
+    public class CascadeStyler : NeonNightStyler
     {
         protected string Cas1 { get; set; }
         protected string Cas2 { get; set; }

@@ -11,7 +11,7 @@ using QR.Drawing.Data;
 
 namespace QR.Drawing.Graphic
 {
-    class TetrisStyler : Styler
+    public class TetrisStyler : Styler
     {
         //protected member
         protected int TopGridRowNumber { get; set; }

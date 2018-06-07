@@ -8,7 +8,7 @@ using QR.Drawing.Util;
 
 namespace QR.Drawing.Data
 {
-    class DataCell
+    public class DataCell
     {
         //Private members
         private DataMatrix root_matrix;
@@ -565,5 +565,5 @@ namespace QR.Drawing.Data
         }
     }
 
-    enum CellColor : byte { BLACK, WHITE }
+    public enum CellColor : byte { BLACK, WHITE }
 }

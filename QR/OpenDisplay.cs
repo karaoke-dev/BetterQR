@@ -12,7 +12,7 @@ using QR.Drawing.Util;
 
 namespace QR.Drawing.Open
 {
-    class OpenDisplay : GameWindow
+    public class OpenDisplay : GameWindow
     {
         /// <summary>
         /// Texture to display.

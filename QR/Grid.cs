@@ -10,7 +10,7 @@ namespace QR.Drawing.Util
     /// Indexs begin from 0.
     /// No negative values.
     /// </summary>
-    class Grid
+    public class Grid
     {
         //private values
         private int max_index;

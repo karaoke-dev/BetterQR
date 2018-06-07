@@ -11,7 +11,7 @@ using QR.Drawing.Data;
 
 namespace QR.Drawing
 {
-    class BlueNightStyler : Styler
+    public class BlueNightStyler : Styler
     {
         protected string blue_pattern;
         public BlueNightStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
