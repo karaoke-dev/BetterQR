@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
@@ -18,13 +17,20 @@ namespace QR.Drawing.Open
         /// Texture to display.
         /// </summary>
         public OpenTexture Texture { get; set; }
+
         Vector2 TextureDisplaySize { get; set; }
 
-        public OpenDisplay(Bitmap bmp) : this(bmp, bmp.Width, bmp.Height, Default.WINDOW_TITLE) { }
+        public OpenDisplay(Bitmap bmp) : this(bmp, bmp.Width, bmp.Height, Default.WINDOW_TITLE)
+        {
+        }
+
         public OpenDisplay(Bitmap bmp, int window_width, int window_height)
             : this(bmp, window_width, window_height, Default.WINDOW_TITLE)
-        { }
-        public OpenDisplay(Bitmap bmp, int window_width, int window_height, string title) : base(window_width, window_height)
+        {
+        }
+
+        public OpenDisplay(Bitmap bmp, int window_width, int window_height, string title) : base(window_width,
+            window_height)
         {
             Title = title;
             GL.Enable(EnableCap.Texture2D);
@@ -89,18 +95,20 @@ namespace QR.Drawing.Open
         {
             float factor_x = 0f;
             float factor_y = 0f;
-            float window_aspect_ratio = (float)Width / (float)Height;
-            float texture_aspect_ratio = (float)Texture.SourceImage.Width / (float)Texture.SourceImage.Height;
+            float window_aspect_ratio = (float) Width / (float) Height;
+            float texture_aspect_ratio = (float) Texture.SourceImage.Width / (float) Texture.SourceImage.Height;
 
             if (window_aspect_ratio > texture_aspect_ratio)
             {
                 factor_y = 1;
-                factor_x = (float)Texture.SourceImage.Width * (float)Height / (float)Texture.SourceImage.Height / Width;
+                factor_x = (float) Texture.SourceImage.Width * (float) Height / (float) Texture.SourceImage.Height /
+                           Width;
             }
             else if (window_aspect_ratio < texture_aspect_ratio)
             {
                 factor_x = 1;
-                factor_y = (float)Texture.SourceImage.Height * (float)Width / (float)Texture.SourceImage.Width / Height;
+                factor_y = (float) Texture.SourceImage.Height * (float) Width / (float) Texture.SourceImage.Width /
+                           Height;
             }
             else
             {

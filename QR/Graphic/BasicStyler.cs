@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using QR.Drawing.Data;
 using QR.Drawing.Graphic;
 using QR.Drawing.Util;
@@ -25,7 +24,7 @@ namespace QR.Drawing.Graphic
 
         //Public Methods
         public BasicStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
-            :base(canvas_length, margin, margin_mode, json_path)
+            : base(canvas_length, margin, margin_mode, json_path)
         {
             //init colors
             black_color = Default.BLACK;
@@ -38,7 +37,9 @@ namespace QR.Drawing.Graphic
         {
             InitStyle(folder, black, null, bg, null);
         }
-        public void InitStyle(string folder, string black_pattern_img, string white_pattern_img, string background_img, string canvas_img)
+
+        public void InitStyle(string folder, string black_pattern_img, string white_pattern_img, string background_img,
+            string canvas_img)
         {
             if (black_pattern_img != null)
             {
@@ -77,9 +78,9 @@ namespace QR.Drawing.Graphic
                 foreach (var b in black)
                 {
                     paint.DrawImage(pattern_black,
-                            GetCellRectangle(b.Position.Row, b.Position.Column),
-                            new Rectangle(0, 0, pattern_black.Width, pattern_black.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(b.Position.Row, b.Position.Column),
+                        new Rectangle(0, 0, pattern_black.Width, pattern_black.Height),
+                        GraphicsUnit.Pixel);
                 }
             }
             paint = Graphics.FromImage(layer_black);
@@ -96,9 +97,9 @@ namespace QR.Drawing.Graphic
                 foreach (var w in white)
                 {
                     paint.DrawImage(pattern_white,
-                            GetCellRectangle(w.Position.Row, w.Position.Column),
-                            new Rectangle(0, 0, pattern_white.Width, pattern_white.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(w.Position.Row, w.Position.Column),
+                        new Rectangle(0, 0, pattern_white.Width, pattern_white.Height),
+                        GraphicsUnit.Pixel);
                 }
             }
             paint = Graphics.FromImage(layer_white);
@@ -113,7 +114,7 @@ namespace QR.Drawing.Graphic
                 Bitmap bg_img = new Bitmap(background_image);
                 paint.DrawImage(bg_img,
                     new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),
-                        new Rectangle(0, 0, bg_img.Width, bg_img.Height), GraphicsUnit.Pixel);
+                    new Rectangle(0, 0, bg_img.Width, bg_img.Height), GraphicsUnit.Pixel);
             }
 
             //draw canvas
@@ -122,12 +123,13 @@ namespace QR.Drawing.Graphic
             {
                 Bitmap c_img = new Bitmap(canvas_image);
                 paint.DrawImage(c_img, new Rectangle(0, 0, CanvasSize.Width, CanvasSize.Height),
-                        new Rectangle(0, 0, c_img.Width, c_img.Height),
-                        GraphicsUnit.Pixel);
+                    new Rectangle(0, 0, c_img.Width, c_img.Height),
+                    GraphicsUnit.Pixel);
             }
             else
             {
-                paint.FillRectangle(new SolidBrush(canvas_color), new Rectangle(0, 0, CanvasSize.Width, CanvasSize.Height));
+                paint.FillRectangle(new SolidBrush(canvas_color),
+                    new Rectangle(0, 0, CanvasSize.Width, CanvasSize.Height));
             }
 
             //merge layers

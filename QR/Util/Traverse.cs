@@ -37,9 +37,9 @@ namespace QR.Drawing.Util
         }
 
         //Delegate Functions
-        static private void Print<T,S>(ref T[,] matrix, S[,] null_matrix, int i, int j)
+        static private void Print<T, S>(ref T[,] matrix, S[,] null_matrix, int i, int j)
         {
-            if(j == matrix.GetLength(1) - 1)
+            if (j == matrix.GetLength(1) - 1)
             {
                 Console.WriteLine();
             }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using QR.Drawing.Graphic;
 using QR.Drawing.Data;
 using QR.Drawing.Util;
@@ -14,23 +13,25 @@ namespace QR.Drawing.Graphic
     public class BlockStyler : Styler
     {
         protected Dictionary<PatternElems, string> PatternDirs;
+
         //Construction
-        public BlockStyler(int canvas_length, float margin, MarginMode margin_mode) : base(canvas_length, margin, margin_mode)
+        public BlockStyler(int canvas_length, float margin, MarginMode margin_mode) : base(canvas_length, margin,
+            margin_mode)
         {
             InitDefaultPatterns();
         }
-        public BlockStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
-            :base(canvas_length, margin, margin_mode, json_path)
-        {
 
+        public BlockStyler(int canvas_length, float margin, MarginMode margin_mode, string json_path)
+            : base(canvas_length, margin, margin_mode, json_path)
+        {
         }
 
         //Private Methods
         //Protected Methods
         public void InitStyle(string folder,
-            string center_img, 
-            string single_border_img, 
-            string end_border_img, 
+            string center_img,
+            string single_border_img,
+            string end_border_img,
             string elbow_border_img,
             string path_border_img,
             string t_border_img,
@@ -48,6 +49,7 @@ namespace QR.Drawing.Graphic
             };
             ImportPatterns(folder, imgs);
         }
+
         protected void InitDefaultPatterns()
         {
             string[] paths = new string[7]
@@ -62,6 +64,7 @@ namespace QR.Drawing.Graphic
             };
             ImportPatterns(@"StrokePatterns", paths);
         }
+
         /// <summary>
         /// Update every cell's Role, Direction, Corner keys based on current state.
         /// </summary>
@@ -166,7 +169,7 @@ namespace QR.Drawing.Graphic
                 else if (c.IsTCenter())
                 {
                     c.Marks.Add(Keys.Role, Values.TCenter);
-                    c.Marks.Add(Keys.Corner, "!");  //init
+                    c.Marks.Add(Keys.Corner, "!"); //init
                     int info = c.AroundColorInfo();
                     if ((info & 1) == 0)
                     {
@@ -260,6 +263,7 @@ namespace QR.Drawing.Graphic
             PatternDirs.Add(PatternElems.T_BORDER, folder + @"/" + patterns[5]);
             PatternDirs.Add(PatternElems.CORNER_BORDER, folder + @"/" + patterns[6]);
         }
+
         public void SetPatternDir(PatternElems elem, string path)
         {
             if (PatternDirs.ContainsKey(elem))
@@ -321,9 +325,9 @@ namespace QR.Drawing.Graphic
                         curr_img.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     }
                     paint.DrawImage(curr_img,
-                            GetCellRectangle(c.Position.Row, c.Position.Column),
-                            new RectangleF(0, 0, curr_img.Width, curr_img.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(c.Position.Row, c.Position.Column),
+                        new RectangleF(0, 0, curr_img.Width, curr_img.Height),
+                        GraphicsUnit.Pixel);
                 }
                 else if (role == Values.Path)
                 {
@@ -333,9 +337,9 @@ namespace QR.Drawing.Graphic
                         curr_img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     }
                     paint.DrawImage(curr_img,
-                            GetCellRectangle(c.Position.Row, c.Position.Column),
-                            new RectangleF(0, 0, curr_img.Width, curr_img.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(c.Position.Row, c.Position.Column),
+                        new RectangleF(0, 0, curr_img.Width, curr_img.Height),
+                        GraphicsUnit.Pixel);
                 }
                 else if (role == Values.Elbow)
                 {
@@ -355,9 +359,9 @@ namespace QR.Drawing.Graphic
                         curr_img.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     }
                     paint.DrawImage(curr_img,
-                            GetCellRectangle(c.Position.Row, c.Position.Column),
-                            new RectangleF(0, 0, curr_img.Width, curr_img.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(c.Position.Row, c.Position.Column),
+                        new RectangleF(0, 0, curr_img.Width, curr_img.Height),
+                        GraphicsUnit.Pixel);
                     //draw corner
                     curr_img = new Bitmap(PatternDirs[PatternElems.CORNER_BORDER]);
                     string corner = c.Marks[Keys.Corner];
@@ -376,9 +380,9 @@ namespace QR.Drawing.Graphic
                             curr_img.RotateFlip(RotateFlipType.Rotate270FlipNone);
                         }
                         paint.DrawImage(curr_img,
-                                GetCellRectangle(c.Position.Row, c.Position.Column),
-                                new RectangleF(0, 0, curr_img.Width, curr_img.Height),
-                                GraphicsUnit.Pixel);
+                            GetCellRectangle(c.Position.Row, c.Position.Column),
+                            new RectangleF(0, 0, curr_img.Width, curr_img.Height),
+                            GraphicsUnit.Pixel);
                     }
                 }
                 else if (role == Values.TCenter)
@@ -399,9 +403,9 @@ namespace QR.Drawing.Graphic
                         curr_img.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     }
                     paint.DrawImage(curr_img,
-                            GetCellRectangle(c.Position.Row, c.Position.Column),
-                            new RectangleF(0, 0, curr_img.Width, curr_img.Height),
-                            GraphicsUnit.Pixel);
+                        GetCellRectangle(c.Position.Row, c.Position.Column),
+                        new RectangleF(0, 0, curr_img.Width, curr_img.Height),
+                        GraphicsUnit.Pixel);
                     //draw corners
                     curr_img = new Bitmap(PatternDirs[PatternElems.CORNER_BORDER]);
                     string corner = c.Marks[Keys.Corner];
@@ -486,7 +490,7 @@ namespace QR.Drawing.Graphic
                         }
                     }
                 }
-            }  //draw black cells foreach
+            } //draw black cells foreach
             paint = Graphics.FromImage(layer_black);
             paint.DrawImage(layer_black_tmp,
                 new RectangleF(CodePosition.X, CodePosition.Y, CodeSize.Width, CodeSize.Height),

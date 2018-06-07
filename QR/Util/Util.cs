@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.IO;
 using System.Drawing;
 
@@ -22,7 +21,7 @@ namespace QR.Drawing.Util
                     FileStream file = new FileStream(path, FileMode.Open);
                     file_bytes = new byte[file.Length];
                     file.Seek(0, SeekOrigin.Begin);
-                    file.Read(file_bytes, 0, (int)file.Length);
+                    file.Read(file_bytes, 0, (int) file.Length);
                     file.Close();
 
                     Decoder decoder = Encoding.UTF8.GetDecoder();
@@ -36,19 +35,17 @@ namespace QR.Drawing.Util
                     throw (new FileNonExistException(
                         "File \"" + path + "\" is not existing, please check out if the path is correct."));
                 }
-
             }
             catch (FileNonExistException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
             }
-
         }
 
         static public RectangleF FitImage(Bitmap img, RectangleF target_rect)
         {
-            float img_prop = (float)img.Width / img.Height;
+            float img_prop = (float) img.Width / img.Height;
             float rect_prop = target_rect.Width / target_rect.Height;
             if (img_prop > rect_prop)
             {
@@ -77,12 +74,22 @@ namespace QR.Drawing.Util
     [Serializable]
     public class FileNonExistException : Exception
     {
-        public FileNonExistException() { }
-        public FileNonExistException(string message) : base(message) { }
-        public FileNonExistException(string message, Exception inner) : base(message, inner) { }
+        public FileNonExistException()
+        {
+        }
+
+        public FileNonExistException(string message) : base(message)
+        {
+        }
+
+        public FileNonExistException(string message, Exception inner) : base(message, inner)
+        {
+        }
+
         protected FileNonExistException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context)
-        { }
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) : base(info, context)
+        {
+        }
     }
 }
